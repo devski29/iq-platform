@@ -13,30 +13,43 @@ function App() {
   const [started, setStarted] = useState(false)
   const [questionIndex, setQuestionIndex] = useState(0)
   const [finished, setFinished] = useState(false)
+  const [analyzing, setAnalyzing] = useState(false)
   const [timeLeft, setTimeLeft] = useState(900)
 
   useEffect(() => {
 
-    if (!started || finished) return
+    if (!started || finished || analyzing) return
 
     const timer = setInterval(() => {
+
       setTimeLeft(prev => {
 
         if (prev <= 1) {
+
           clearInterval(timer)
-          setFinished(true)
+
+          setAnalyzing(true)
+
+          setTimeout(() => {
+            setFinished(true)
+            setAnalyzing(false)
+          }, 4000)
+
           return 0
         }
 
         return prev - 1
+
       })
+
     }, 1000)
 
     return () => clearInterval(timer)
 
-  }, [started, finished])
+  }, [started, finished, analyzing])
 
   const formatTime = () => {
+
     const minutes = Math.floor(timeLeft / 60)
     const seconds = timeLeft % 60
 
@@ -46,18 +59,69 @@ function App() {
   const nextQuestion = () => {
 
     if (questionIndex >= questions.length - 1) {
-      setFinished(true)
+
+      setAnalyzing(true)
+
+      setTimeout(() => {
+        setFinished(true)
+        setAnalyzing(false)
+      }, 4000)
+
       return
     }
 
     setQuestionIndex(prev => prev + 1)
   }
 
+  /* ANALYZING SCREEN */
+
+  if (analyzing) {
+    return (
+      <div className="min-h-screen bg-[#050505] text-white flex items-center justify-center overflow-hidden relative">
+
+        <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-blue-500/20 rounded-full blur-3xl floating-glow"></div>
+
+        <div className="relative z-10 text-center max-w-2xl px-6">
+
+          <div className="w-32 h-32 mx-auto rounded-full border-4 border-blue-500/20 border-t-blue-500 animate-spin"></div>
+
+          <div className="mt-12 text-blue-400 uppercase tracking-[0.4em] text-sm">
+            BrainStormIQ Analysis Engine
+          </div>
+
+          <h1 className="mt-6 text-5xl md:text-7xl font-black leading-tight">
+            Analyzing Your
+            <span className="text-blue-400"> Cognitive Profile</span>
+          </h1>
+
+          <div className="mt-10 space-y-4">
+
+            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
+              Processing Pattern Recognition...
+            </div>
+
+            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
+              Measuring Decision Speed...
+            </div>
+
+            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
+              Generating Intelligence Profile...
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    )
+  }
+
+  /* RESULTS SCREEN */
+
   if (finished) {
     return (
       <div className="min-h-screen bg-[#050505] text-white flex items-center justify-center px-6 overflow-hidden relative">
 
-        {/* Glow */}
         <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-blue-500/20 rounded-full blur-3xl floating-glow"></div>
 
         <div className="relative z-10 max-w-2xl w-full text-center">
@@ -77,8 +141,16 @@ function App() {
               Estimated IQ Score
             </div>
 
-            <div className="text-7xl font-black blur-sm select-none">
+            <div className="mt-3 text-zinc-500">
+              Full percentile ranking locked
+            </div>
+
+            <div className="text-7xl font-black blur-sm select-none mt-6">
               127
+            </div>
+
+            <div className="mt-4 text-red-400 font-semibold animate-pulse">
+              Premium insights hidden
             </div>
 
             <div className="mt-6 space-y-3 text-left">
@@ -114,14 +186,14 @@ function App() {
     )
   }
 
+  /* TEST SCREEN */
+
   if (started) {
     return (
       <div className="min-h-screen bg-[#050505] text-white flex flex-col overflow-hidden relative">
 
-        {/* Glow */}
         <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-blue-500/20 rounded-full blur-3xl floating-glow"></div>
 
-        {/* Top Bar */}
         <div className="relative z-10 w-full border-b border-white/10 p-4 flex items-center justify-between">
 
           <div className="text-zinc-400">
@@ -134,7 +206,6 @@ function App() {
 
         </div>
 
-        {/* Progress Bar */}
         <div className="w-full h-1 bg-white/10 relative z-10">
 
           <div
@@ -146,20 +217,18 @@ function App() {
 
         </div>
 
-        {/* Question */}
         <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 text-center">
 
           <div className="max-w-3xl w-full">
 
             <div className="mb-6 text-zinc-500 uppercase tracking-[0.3em] text-sm">
-              Cognitive Assessment
+              BrainStormIQ Assessment
             </div>
 
             <h1 className="text-4xl md:text-6xl font-black leading-tight">
               {questions[questionIndex]}
             </h1>
 
-            {/* Answers */}
             <div className="grid grid-cols-2 gap-4 mt-16">
 
               {[1, 2, 3, 4].map((item) => (
@@ -174,9 +243,12 @@ function App() {
 
                   <div className="relative z-10 flex items-center justify-center w-full h-full">
 
-                    <div className="w-24 h-24 rounded-2xl border-4 border-white/30 flex items-center justify-center text-4xl font-black text-blue-400">
+                    <div className="grid grid-cols-2 gap-2">
 
-                      {item}
+                      <div className="w-6 h-6 rounded bg-blue-400"></div>
+                      <div className="w-6 h-6 rounded border border-white/30"></div>
+                      <div className="w-6 h-6 rounded border border-white/30"></div>
+                      <div className="w-6 h-6 rounded bg-blue-400"></div>
 
                     </div>
 
@@ -196,38 +268,34 @@ function App() {
     )
   }
 
+  /* LANDING PAGE */
+
   return (
     <div className="min-h-screen bg-[#050505] text-white overflow-hidden relative">
 
-      {/* Floating Glow */}
       <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-blue-500/20 rounded-full blur-3xl floating-glow"></div>
 
-      {/* Main Content */}
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 text-center">
 
-        {/* Live Status */}
         <div className="mb-6 flex items-center gap-3 px-4 py-2 rounded-full border border-blue-500/30 bg-white/5 backdrop-blur-md text-sm text-blue-200">
 
           <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
 
-          <span>Live Cognitive Assessment Platform</span>
+          <span>BrainStormIQ Intelligence System</span>
 
         </div>
 
-        {/* Headline */}
         <h1 className="text-5xl md:text-7xl font-black leading-tight max-w-5xl">
           Discover How Your Brain
           <span className="text-blue-400"> Actually Performs</span>
         </h1>
 
-        {/* Subheadline */}
         <p className="mt-6 text-zinc-400 max-w-2xl text-lg">
           Measure reasoning, pattern recognition, memory,
           focus, and processing speed through a cinematic
           modern intelligence assessment.
         </p>
 
-        {/* Buttons */}
         <div className="flex gap-4 mt-10 flex-wrap justify-center">
 
           <button
@@ -237,13 +305,12 @@ function App() {
             Start Free Assessment
           </button>
 
-          <button className="px-8 py-4 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 hover:scale-105 active:scale-95 transition-all duration-300 font-semibold text-lg backdrop-blur-md">
-            Challenge Yourself
-          </button>
-
         </div>
 
-        {/* Stats Cards */}
+        <div className="mt-10 text-zinc-500 text-sm">
+          2,481 users currently taking the assessment
+        </div>
+
         <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl w-full">
 
           <div className="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-all duration-300">
