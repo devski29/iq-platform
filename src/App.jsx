@@ -3,11 +3,26 @@ import { useEffect, useState } from "react"
 function App() {
 
   const questions = [
-    "Which shape completes the sequence?",
-    "Which number comes next?",
-    "Identify the hidden pattern.",
-    "Which option is different?",
-    "Solve the logical sequence."
+    {
+      type: "pattern",
+      question: "Which shape completes the sequence?"
+    },
+    {
+      type: "number",
+      question: "Which number logically comes next?"
+    },
+    {
+      type: "logic",
+      question: "Identify the hidden relationship."
+    },
+    {
+      type: "spatial",
+      question: "Which object matches the rotation?"
+    },
+    {
+      type: "memory",
+      question: "Select the previously shown pattern."
+    }
   ]
 
   const [started, setStarted] = useState(false)
@@ -15,6 +30,8 @@ function App() {
   const [finished, setFinished] = useState(false)
   const [analyzing, setAnalyzing] = useState(false)
   const [timeLeft, setTimeLeft] = useState(900)
+
+  const currentQuestion = questions[questionIndex]
 
   useEffect(() => {
 
@@ -73,7 +90,67 @@ function App() {
     setQuestionIndex(prev => prev + 1)
   }
 
-  /* ANALYZING SCREEN */
+  const renderAnswer = () => {
+
+    if (currentQuestion.type === "number") {
+      return (
+        <div className="text-5xl font-black text-blue-400">
+          24
+        </div>
+      )
+    }
+
+    if (currentQuestion.type === "logic") {
+      return (
+        <div className="flex flex-col items-center gap-2">
+
+          <div className="w-12 h-12 rounded-full bg-blue-400"></div>
+
+          <div className="w-20 h-2 bg-white/30 rounded-full"></div>
+
+          <div className="w-12 h-12 rotate-45 bg-white/20"></div>
+
+        </div>
+      )
+    }
+
+    if (currentQuestion.type === "spatial") {
+      return (
+        <div className="w-20 h-20 border-4 border-blue-400 rotate-45 rounded-2xl"></div>
+      )
+    }
+
+    if (currentQuestion.type === "memory") {
+      return (
+        <div className="grid grid-cols-3 gap-2">
+
+          <div className="w-5 h-5 bg-blue-400 rounded"></div>
+          <div className="w-5 h-5 bg-white/20 rounded"></div>
+          <div className="w-5 h-5 bg-blue-400 rounded"></div>
+
+          <div className="w-5 h-5 bg-white/20 rounded"></div>
+          <div className="w-5 h-5 bg-blue-400 rounded"></div>
+          <div className="w-5 h-5 bg-white/20 rounded"></div>
+
+          <div className="w-5 h-5 bg-blue-400 rounded"></div>
+          <div className="w-5 h-5 bg-white/20 rounded"></div>
+          <div className="w-5 h-5 bg-blue-400 rounded"></div>
+
+        </div>
+      )
+    }
+
+    return (
+      <div className="grid grid-cols-2 gap-2">
+
+        <div className="w-6 h-6 rounded bg-blue-400"></div>
+        <div className="w-6 h-6 rounded border border-white/30"></div>
+        <div className="w-6 h-6 rounded border border-white/30"></div>
+        <div className="w-6 h-6 rounded bg-blue-400"></div>
+
+      </div>
+    )
+  }
 
   if (analyzing) {
     return (
@@ -94,29 +171,11 @@ function App() {
             <span className="text-blue-400"> Cognitive Profile</span>
           </h1>
 
-          <div className="mt-10 space-y-4">
-
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
-              Processing Pattern Recognition...
-            </div>
-
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
-              Measuring Decision Speed...
-            </div>
-
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
-              Generating Intelligence Profile...
-            </div>
-
-          </div>
-
         </div>
 
       </div>
     )
   }
-
-  /* RESULTS SCREEN */
 
   if (finished) {
     return (
@@ -153,22 +212,6 @@ function App() {
               Premium insights hidden
             </div>
 
-            <div className="mt-6 space-y-3 text-left">
-
-              <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
-                Exceptional pattern recognition detected
-              </div>
-
-              <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
-                Processing speed above average
-              </div>
-
-              <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
-                Strategic reasoning profile identified
-              </div>
-
-            </div>
-
             <a
               href="https://buy.stripe.com/fZu00iejd55hc7c3yobAs00"
               target="_blank"
@@ -185,8 +228,6 @@ function App() {
       </div>
     )
   }
-
-  /* TEST SCREEN */
 
   if (started) {
     return (
@@ -226,7 +267,7 @@ function App() {
             </div>
 
             <h1 className="text-4xl md:text-6xl font-black leading-tight">
-              {questions[questionIndex]}
+              {currentQuestion.question}
             </h1>
 
             <div className="grid grid-cols-2 gap-4 mt-16">
@@ -243,14 +284,7 @@ function App() {
 
                   <div className="relative z-10 flex items-center justify-center w-full h-full">
 
-                    <div className="grid grid-cols-2 gap-2">
-
-                      <div className="w-6 h-6 rounded bg-blue-400"></div>
-                      <div className="w-6 h-6 rounded border border-white/30"></div>
-                      <div className="w-6 h-6 rounded border border-white/30"></div>
-                      <div className="w-6 h-6 rounded bg-blue-400"></div>
-
-                    </div>
+                    {renderAnswer()}
 
                   </div>
 
@@ -267,8 +301,6 @@ function App() {
       </div>
     )
   }
-
-  /* LANDING PAGE */
 
   return (
     <div className="min-h-screen bg-[#050505] text-white overflow-hidden relative">
@@ -296,44 +328,12 @@ function App() {
           modern intelligence assessment.
         </p>
 
-        <div className="flex gap-4 mt-10 flex-wrap justify-center">
-
-          <button
-            onClick={() => setStarted(true)}
-            className="px-8 py-4 rounded-2xl bg-blue-500 hover:bg-blue-400 hover:scale-105 active:scale-95 transition-all duration-300 font-semibold text-lg shadow-[0_0_40px_rgba(59,130,246,0.5)]"
-          >
-            Start Free Assessment
-          </button>
-
-        </div>
-
-        <div className="mt-10 text-zinc-500 text-sm">
-          2,481 users currently taking the assessment
-        </div>
-
-        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl w-full">
-
-          <div className="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-all duration-300">
-            <div className="text-3xl font-bold text-blue-400">15m</div>
-            <div className="text-zinc-400 text-sm mt-1">Assessment Time</div>
-          </div>
-
-          <div className="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-all duration-300">
-            <div className="text-3xl font-bold text-blue-400">25</div>
-            <div className="text-zinc-400 text-sm mt-1">Questions</div>
-          </div>
-
-          <div className="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-all duration-300">
-            <div className="text-3xl font-bold text-blue-400">5</div>
-            <div className="text-zinc-400 text-sm mt-1">Cognitive Areas</div>
-          </div>
-
-          <div className="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-all duration-300">
-            <div className="text-3xl font-bold text-blue-400">Live</div>
-            <div className="text-zinc-400 text-sm mt-1">Real-Time Analysis</div>
-          </div>
-
-        </div>
+        <button
+          onClick={() => setStarted(true)}
+          className="mt-10 px-8 py-4 rounded-2xl bg-blue-500 hover:bg-blue-400 hover:scale-105 active:scale-95 transition-all duration-300 font-semibold text-lg shadow-[0_0_40px_rgba(59,130,246,0.5)]"
+        >
+          Start Free Assessment
+        </button>
 
       </div>
 
