@@ -3,25 +3,228 @@ import { useEffect, useState } from "react"
 function App() {
 
   const questions = [
+    // Cycle 1
     {
+      id: 1,
       type: "pattern",
-      question: "Which shape completes the sequence?"
+      difficulty: "easy",
+      question: "Which shape completes the sequence: ■, □, ■, □, ?"
     },
     {
+      id: 2,
       type: "number",
-      question: "Which number logically comes next?"
+      difficulty: "easy",
+      question: "Which number logically comes next in the sequence: 3, 6, 12, 24, ?"
     },
     {
+      id: 3,
       type: "logic",
-      question: "Identify the hidden relationship."
+      difficulty: "easy",
+      question: "Which option best completes the analogy: HAND is to GLOVE as FOOT is to ?"
     },
     {
+      id: 4,
       type: "spatial",
-      question: "Which object matches the rotation?"
+      difficulty: "easy",
+      question: "Which object matches the rotated figure when turned 90° clockwise?"
     },
     {
+      id: 5,
       type: "memory",
-      question: "Select the previously shown pattern."
+      difficulty: "easy",
+      question: "Select the pattern that exactly matches the one you saw a moment ago."
+    },
+
+    // Cycle 2
+    {
+      id: 6,
+      type: "pattern",
+      difficulty: "easy",
+      question: "In a 3×3 grid of shapes, one tile is missing. Which shape logically fills the empty position?"
+    },
+    {
+      id: 7,
+      type: "number",
+      difficulty: "easy",
+      question: "What number comes next: 2, 5, 11, 23, 47, ?"
+    },
+    {
+      id: 8,
+      type: "logic",
+      difficulty: "easy",
+      question: "Four people sit at a round table. Alex sits opposite Ben. Chris sits to the left of Alex. Who sits opposite Chris?"
+    },
+    {
+      id: 9,
+      type: "spatial",
+      difficulty: "easy",
+      question: "A cube is painted on all faces and then cut into 27 smaller cubes. How many small cubes have exactly two painted faces?"
+    },
+    {
+      id: 10,
+      type: "memory",
+      difficulty: "easy",
+      question: "You briefly saw a 3×3 light grid. Which option shows the identical lights on/off pattern?"
+    },
+
+    // Cycle 3
+    {
+      id: 11,
+      type: "pattern",
+      difficulty: "medium",
+      question: "Lines in a sequence grow: |, ||, |||, ||||, ?. Which figure comes next?"
+    },
+    {
+      id: 12,
+      type: "number",
+      difficulty: "medium",
+      question: "Which number completes the sequence: 9, 16, 25, 36, ?"
+    },
+    {
+      id: 13,
+      type: "logic",
+      difficulty: "medium",
+      question: "If all ZARPs are BLERPs and some BLERPs are NERPS, which statement must be true?"
+    },
+    {
+      id: 14,
+      type: "spatial",
+      difficulty: "medium",
+      question: "Which unfolded net can be folded to create the same cube shown?"
+    },
+    {
+      id: 15,
+      type: "memory",
+      difficulty: "medium",
+      question: "You saw a sequence of 5 symbols. Which option presents them in the exact same order?"
+    },
+
+    // Cycle 4
+    {
+      id: 16,
+      type: "pattern",
+      difficulty: "medium",
+      question: "Shapes alternate in both color and orientation. Which tile should appear next in the row?"
+    },
+    {
+      id: 17,
+      type: "number",
+      difficulty: "medium",
+      question: "What is the missing number: 4, 9, 19, 39, 79, ?"
+    },
+    {
+      id: 18,
+      type: "logic",
+      difficulty: "medium",
+      question: "Three statements are given; only one is true. Which option identifies the true statement consistently?"
+    },
+    {
+      id: 19,
+      type: "spatial",
+      difficulty: "medium",
+      question: "Which figure shows the same shape mirrored across a vertical axis?"
+    },
+    {
+      id: 20,
+      type: "memory",
+      difficulty: "medium",
+      question: "A 2×4 grid flashed briefly. Which answer choice keeps the same cells filled?"
+    },
+
+    // Cycle 5
+    {
+      id: 21,
+      type: "pattern",
+      difficulty: "medium",
+      question: "In a matrix of circles and triangles, every row follows a rule. Which symbol completes the last row?"
+    },
+    {
+      id: 22,
+      type: "number",
+      difficulty: "medium",
+      question: "Complete the series: 1, 1, 2, 3, 5, 8, ?"
+    },
+    {
+      id: 23,
+      type: "logic",
+      difficulty: "medium",
+      question: "If yesterday was two days after Monday, what day is today?"
+    },
+    {
+      id: 24,
+      type: "spatial",
+      difficulty: "medium",
+      question: "Which option shows the same 3D object viewed from above?"
+    },
+    {
+      id: 25,
+      type: "memory",
+      difficulty: "medium",
+      question: "You saw a pattern of three colored squares. Which option repeats the colors in the same positions?"
+    },
+
+    // Cycle 6
+    {
+      id: 26,
+      type: "pattern",
+      difficulty: "hard",
+      question: "A pattern alternates thick and thin lines while increasing in count. Which panel comes next?"
+    },
+    {
+      id: 27,
+      type: "number",
+      difficulty: "hard",
+      question: "What is the next number: 10, 13, 18, 25, 34, ?"
+    },
+    {
+      id: 28,
+      type: "logic",
+      difficulty: "hard",
+      question: "Complete the analogy: NIGHT is to DARK as DAY is to ?"
+    },
+    {
+      id: 29,
+      type: "spatial",
+      difficulty: "hard",
+      question: "Which rotation of the L-shaped figure matches the target orientation exactly?"
+    },
+    {
+      id: 30,
+      type: "memory",
+      difficulty: "hard",
+      question: "You saw a 4-digit code flash briefly. Which option shows the exact same code?"
+    },
+
+    // Cycle 7
+    {
+      id: 31,
+      type: "pattern",
+      difficulty: "hard",
+      question: "Tiles alternate between black and white diagonals. Which tile continues the checker pattern correctly?"
+    },
+    {
+      id: 32,
+      type: "number",
+      difficulty: "hard",
+      question: "Which number best completes: 5, 10, 20, 40, ?"
+    },
+    {
+      id: 33,
+      type: "logic",
+      difficulty: "hard",
+      question: "Three shapes follow a rule of increasing sides (triangle, square, pentagon...). Which shape comes next?"
+    },
+    {
+      id: 34,
+      type: "spatial",
+      difficulty: "hard",
+      question: "If a shape is rotated 180° and then mirrored horizontally, which option matches the final result?"
+    },
+    {
+      id: 35,
+      type: "memory",
+      difficulty: "hard",
+      question: "A pattern of arrows (↑, ↓, ←, →) was shown. Which option repeats them in the same order?"
     }
   ]
 
@@ -218,7 +421,7 @@ function App() {
               rel="noopener noreferrer"
               className="block mt-8 w-full py-5 rounded-2xl bg-blue-500 hover:bg-blue-400 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 text-xl font-bold shadow-[0_0_50px_rgba(59,130,246,0.5)]"
             >
-              Unlock Full Results • £3.99
+              Unlock Full Results • £1.99
             </a>
 
           </div>
