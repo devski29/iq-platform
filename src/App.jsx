@@ -365,15 +365,15 @@ function App() {
 
         <div className="relative z-10 text-center max-w-2xl px-6">
 
-          <div className="w-32 h-32 mx-auto rounded-full border-4 border-blue-500/20 border-t-blue-500 animate-spin"></div>
+          <div className="w-32 h-32 mx-auto rounded-full border-4 border-cyan-400/20 border-t-cyan-500 animate-spin shadow-[0_0_40px_rgba(56,189,248,0.45)] bg-white/40 backdrop-blur-xl"></div>
 
           <div className="mt-8 text-cyan-600 uppercase tracking-[0.4em] text-xs">
             NPC Detector Analysis Engine
           </div>
 
-          <h1 className="mt-6 text-5xl md:text-7xl font-black leading-tight">
-            Analyzing Your
-            <span className="text-blue-400"> Cognitive Profile</span>
+          <h1 className="mt-4 text-4xl md:text-5xl font-semibold leading-tight tracking-tight text-slate-900">
+            Scanning Cognitive Patterns
+            <span className="text-cyan-600"> In The Simulation</span>
           </h1>
 
         </div>
@@ -390,40 +390,40 @@ function App() {
 
         <div className="relative z-10 max-w-2xl w-full text-center">
 
-          <div className="text-blue-400 text-sm tracking-[0.3em] uppercase mb-6">
+          <div className="text-cyan-600 text-xs tracking-[0.3em] uppercase mb-5">
             Results Ready
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-black leading-tight">
-            Your Cognitive Profile
-            <span className="text-blue-400"> Has Been Generated</span>
+          <h1 className="text-4xl md:text-5xl font-semibold leading-tight tracking-tight text-slate-900">
+            Your NPC Score
+            <span className="text-cyan-600"> Has Been Calculated</span>
           </h1>
 
           <div className="mt-12 p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md">
 
-            <div className="text-zinc-500 mb-4">
-              Estimated IQ Score
+            <div className="text-slate-500 mb-2 text-sm font-medium">
+              NPC Score Rating
             </div>
 
-            <div className="mt-3 text-zinc-500">
-              Full percentile ranking locked
+            <div className="mt-1 text-slate-400 text-sm">
+              Detailed Simulation Escape analysis locked
             </div>
 
-            <div className="text-7xl font-black blur-sm select-none mt-6">
+            <div className="text-7xl font-semibold blur-sm select-none mt-6 text-slate-900">
               127
             </div>
 
-            <div className="mt-4 text-red-400 font-semibold animate-pulse">
-              Premium insights hidden
+            <div className="mt-4 text-amber-500 font-semibold animate-pulse">
+              Premium cognitive profile hidden
             </div>
 
             <a
               href="https://buy.stripe.com/fZu00iejd55hc7c3yobAs00"
               target="_blank"
               rel="noopener noreferrer"
-              className="block mt-8 w-full py-5 rounded-2xl bg-blue-500 hover:bg-blue-400 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 text-xl font-bold shadow-[0_0_50px_rgba(59,130,246,0.5)]"
+              className="block mt-8 w-full py-5 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 text-xl font-semibold shadow-[0_20px_55px_rgba(56,189,248,0.6)]"
             >
-              Unlock Full Results • £1.99
+              Unlock Full NPC Report • £1.99
             </a>
 
           </div>
@@ -443,20 +443,24 @@ function App() {
 
         <div className="relative z-10 w-full border-b border-white/20 bg-white/60 backdrop-blur-xl p-4 flex items-center justify-between shadow-[0_10px_35px_rgba(15,23,42,0.12)]">
 
-          <div className="text-zinc-400">
+
+          <div className="text-slate-500">
             Question {questionIndex + 1} / {questions.length}
           </div>
 
-          <div className="text-blue-400 font-bold">
+
+          <div className="text-cyan-600 font-semibold">
             {formatTime()}
           </div>
 
         </div>
 
-        <div className="w-full h-1 bg-white/10 relative z-10">
+
+        <div className="w-full h-1 bg-slate-200 relative z-10">
 
           <div
-            className="h-full bg-blue-500 transition-all duration-500"
+
+            className="h-full bg-gradient-to-r from-cyan-500 to-blue-600 transition-all duration-500 rounded-full"
             style={{
               width: `${((questionIndex + 1) / questions.length) * 100}%`
             }}
@@ -466,27 +470,32 @@ function App() {
 
         <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 text-center">
 
-          <div className="max-w-3xl w-full">
+
+          <div className="max-w-3xl w-full rounded-3xl bg-white/80 backdrop-blur-xl border border-slate-200 shadow-[0_24px_60px_rgba(15,23,42,0.12)] px-6 py-10">
 
             <div className="mb-6 text-slate-500 uppercase tracking-[0.3em] text-xs">
               NPC Detector Assessment
             </div>
 
-            <h1 className="text-4xl md:text-6xl font-black leading-tight">
+
+            <h1 className="text-3xl md:text-5xl font-semibold leading-tight tracking-tight text-slate-900">
               {currentQuestion.question}
             </h1>
 
-            <div className="grid grid-cols-2 gap-4 mt-16">
+
+            <div className="grid grid-cols-2 gap-4 mt-10">
 
               {[1, 2, 3, 4].map((item) => (
 
                 <button
                   key={item}
                   onClick={nextQuestion}
-                  className="group aspect-square rounded-3xl bg-white/5 border border-white/10 hover:border-blue-500 hover:bg-blue-500/10 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 cursor-pointer overflow-hidden relative"
+
+                  className="group aspect-square rounded-3xl bg-white/80 border border-slate-200 hover:border-cyan-500 hover:bg-cyan-50 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 cursor-pointer overflow-hidden relative shadow-[0_18px_45px_rgba(15,23,42,0.08)]"
                 >
 
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 bg-gradient-to-br from-blue-500/10 to-transparent"></div>
+
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 bg-gradient-to-br from-cyan-400/15 via-blue-500/10 to-transparent"></div>
 
                   <div className="relative z-10 flex items-center justify-center w-full h-full">
 
