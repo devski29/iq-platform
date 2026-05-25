@@ -395,6 +395,7 @@ function App() {
   const [finished, setFinished] = useState(false)
   const [analyzing, setAnalyzing] = useState(false)
   const [timeLeft, setTimeLeft] = useState(900)
+  const [shareOpen, setShareOpen] = useState(false)
 
   const currentQuestion = questions[questionIndex]
 
@@ -453,6 +454,23 @@ function App() {
     }
 
     setQuestionIndex(prev => prev + 1)
+  }
+
+  const handleAskFriend = () => {
+    const baseUrl = window.location.origin + window.location.pathname
+    const shareUrl = baseUrl + '?q=' + currentQuestion.id
+    const shareText = "I'm stuck on this NPC Detector Challenge question 💀 Think you can solve it?"
+    if (navigator.share) {
+      navigator
+        .share({
+          title: 'NPC Detector Challenge',
+          text: shareText,
+          url: shareUrl,
+        })
+        .catch(() => {})
+    } else {
+      setShareOpen(true)
+    }
   }
 
   // Answer visuals are now fully driven by question.options.
@@ -531,6 +549,50 @@ function App() {
 
         </div>
 
+        {shareOpen && (
+          <div className="fixed inset-0 z-20 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm">
+            <div className="bg-white rounded-3xl shadow-[0_24px_60px_rgba(15,23,42,0.3)] max-w-sm w-full mx-4 p-6 space-y-4">
+              <h2 className="text-lg font-semibold text-slate-900">
+                Share this question
+              </h2>
+              <p className="text-sm text-slate-500">
+                I&apos;m stuck on this NPC Detector Challenge question 💀 Think you can solve it?
+              </p>
+              <button
+                onClick={() => {
+                  const baseUrl = window.location.origin + window.location.pathname
+                  const shareUrl = baseUrl + '?q=' + currentQuestion.id
+                  const shareText = "I'm stuck on this NPC Detector Challenge question 💀 Think you can solve it?"
+                  if (navigator.share) {
+                    navigator
+                      .share({
+                        title: 'NPC Detector Challenge',
+                        text: shareText,
+                        url: shareUrl,
+                      })
+                      .catch(() => {})
+                  } else if (navigator.clipboard) {
+                    navigator.clipboard.writeText(shareUrl)
+                  }
+                  setShareOpen(false)
+                }}
+                className="w-full rounded-2xl bg-slate-900 text-white py-3 text-sm font-semibold hover:bg-slate-800 transition-colors"
+              >
+                Copy link & open share apps
+              </button>
+              <p className="text-[11px] text-slate-400">
+                WhatsApp · Instagram · Snapchat · Messenger · Telegram · Discord · Twitter/X · SMS
+              </p>
+              <button
+                onClick={() => setShareOpen(false)}
+                className="w-full text-xs text-slate-400 hover:text-slate-500"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
+
       </div>
     )
   }
@@ -567,7 +629,7 @@ function App() {
 
         <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 text-center">
 
-          <div className="max-w-3xl w-full rounded-3xl bg-white/80 backdrop-blur-xl border border-slate-200 shadow-[0_24px_60px_rgba(15,23,42,0.12)] px-6 py-10">
+          <div className="max-w-3xl w-full rounded-3xl bg-white/80 backdrop-blur-xl border border-slate-200 shadow-[0_24px_60px_rgba(15,23,42,0.12)] px-6 py-10 relative">
 
             <div className="mb-6 text-slate-500 uppercase tracking-[0.3em] text-xs">
               NPC Detector Assessment
@@ -601,9 +663,73 @@ function App() {
 
             </div>
 
+            <div className="mt-8 flex flex-col items-center gap-2">
+              <button
+                onClick={handleAskFriend}
+                className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/80 border border-cyan-400/60 text-slate-900 hover:bg-cyan-50 hover:border-cyan-500 shadow-[0_14px_35px_rgba(15,23,42,0.12)] hover:shadow-[0_18px_45px_rgba(56,189,248,0.35)] transition-all duration-300 hover:scale-[1.03] active:scale-95 overflow-hidden"
+              >
+                <span className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-cyan-400/15 via-blue-500/10 to-transparent transition-opacity duration-300" />
+                <span className="relative z-10 flex items-center gap-2">
+                  <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-cyan-500/10 border border-cyan-500/60">
+                    <span className="block h-2.5 w-2.5 border-[2px] border-cyan-600 border-t-transparent border-l-transparent rounded-[4px] rotate-45 translate-x-[1px] -translate-y-[1px]" />
+                  </span>
+                  <span className="text-sm font-semibold tracking-wide">
+                    Ask A Friend
+                  </span>
+                </span>
+              </button>
+              <p className="text-xs text-slate-400">
+                Even geniuses ask for backup.
+              </p>
+            </div>
+
           </div>
 
         </div>
+
+        {shareOpen && (
+          <div className="fixed inset-0 z-20 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm">
+            <div className="bg-white rounded-3xl shadow-[0_24px_60px_rgba(15,23,42,0.3)] max-w-sm w-full mx-4 p-6 space-y-4">
+              <h2 className="text-lg font-semibold text-slate-900">
+                Share this question
+              </h2>
+              <p className="text-sm text-slate-500">
+                I&apos;m stuck on this NPC Detector Challenge question 💀 Think you can solve it?
+              </p>
+              <button
+                onClick={() => {
+                  const baseUrl = window.location.origin + window.location.pathname
+                  const shareUrl = baseUrl + '?q=' + currentQuestion.id
+                  const shareText = "I'm stuck on this NPC Detector Challenge question 💀 Think you can solve it?"
+                  if (navigator.share) {
+                    navigator
+                      .share({
+                        title: 'NPC Detector Challenge',
+                        text: shareText,
+                        url: shareUrl,
+                      })
+                      .catch(() => {})
+                  } else if (navigator.clipboard) {
+                    navigator.clipboard.writeText(shareUrl)
+                  }
+                  setShareOpen(false)
+                }}
+                className="w-full rounded-2xl bg-slate-900 text-white py-3 text-sm font-semibold hover:bg-slate-800 transition-colors"
+              >
+                Copy link & open share apps
+              </button>
+              <p className="text-[11px] text-slate-400">
+                WhatsApp · Instagram · Snapchat · Messenger · Telegram · Discord · Twitter/X · SMS
+              </p>
+              <button
+                onClick={() => setShareOpen(false)}
+                className="w-full text-xs text-slate-400 hover:text-slate-500"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
 
       </div>
     )
@@ -657,11 +783,55 @@ function App() {
           </button>
         </div>
 
+        </div>
+
+        {shareOpen && (
+        <div className="fixed inset-0 z-20 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm">
+          <div className="bg-white rounded-3xl shadow-[0_24px_60px_rgba(15,23,42,0.3)] max-w-sm w-full mx-4 p-6 space-y-4">
+            <h2 className="text-lg font-semibold text-slate-900">
+              Share this question
+            </h2>
+            <p className="text-sm text-slate-500">
+              I&apos;m stuck on this NPC Detector Challenge question 💀 Think you can solve it?
+            </p>
+            <button
+              onClick={() => {
+                const baseUrl = window.location.origin + window.location.pathname
+                const shareUrl = baseUrl + '?q=' + currentQuestion.id
+                const shareText = "I'm stuck on this NPC Detector Challenge question 💀 Think you can solve it?"
+                if (navigator.share) {
+                  navigator
+                    .share({
+                      title: 'NPC Detector Challenge',
+                      text: shareText,
+                      url: shareUrl,
+                    })
+                    .catch(() => {})
+                } else if (navigator.clipboard) {
+                  navigator.clipboard.writeText(shareUrl)
+                }
+                setShareOpen(false)
+              }}
+              className="w-full rounded-2xl bg-slate-900 text-white py-3 text-sm font-semibold hover:bg-slate-800 transition-colors"
+            >
+              Copy link & open share apps
+            </button>
+            <p className="text-[11px] text-slate-400">
+              WhatsApp · Instagram · Snapchat · Messenger · Telegram · Discord · Twitter/X · SMS
+            </p>
+            <button
+              onClick={() => setShareOpen(false)}
+              className="w-full text-xs text-slate-400 hover:text-slate-500"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+        )}
 
       </div>
+    )
+  }
 
-    </div>
-  )
-}
 
 export default App
