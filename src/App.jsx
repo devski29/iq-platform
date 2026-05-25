@@ -5,229 +5,389 @@ import { useEffect, useState } from "react"
 function App() {
 
   const questions = [
-    // Cycle 1
+    // 1–10: easier, confidence-building
     {
       id: 1,
       type: "pattern",
       difficulty: "easy",
-      question: "Which shape completes the sequence: ■, □, ■, □, ?"
+      question: "Which shape completes the sequence: ■, ▲, ■, ▲, ?",
+      options: ["■", "▲", "●", "◆"],
+      correctIndex: 0,
     },
     {
       id: 2,
       type: "number",
       difficulty: "easy",
-      question: "Which number logically comes next in the sequence: 3, 6, 12, 24, ?"
+      question: "Which number comes next: 4, 7, 10, 13, ?",
+      options: ["15", "16", "17", "18"],
+      correctIndex: 1,
     },
     {
       id: 3,
       type: "logic",
       difficulty: "easy",
-      question: "Which option best completes the analogy: HAND is to GLOVE as FOOT is to ?"
+      question: "HAND is to GLOVE as FOOT is to:",
+      options: ["Sock", "Hat", "Scarf", "Glasses"],
+      correctIndex: 0,
     },
     {
       id: 4,
-      type: "spatial",
+      type: "sequence",
       difficulty: "easy",
-      question: "Which object matches the rotated figure when turned 90° clockwise?"
+      question: "Which letter completes the sequence: A, C, E, G, ?",
+      options: ["H", "I", "J", "K"],
+      correctIndex: 0,
     },
     {
       id: 5,
-      type: "memory",
+      type: "number",
       difficulty: "easy",
-      question: "Select the pattern that exactly matches the one you saw a moment ago."
+      question: "Which number is the smallest?",
+      options: ["-2", "0", "3", "5"],
+      correctIndex: 0,
     },
-
-    // Cycle 2
     {
       id: 6,
       type: "pattern",
       difficulty: "easy",
-      question: "In a 3×3 grid of shapes, one tile is missing. Which shape logically fills the empty position?"
+      question: "A pattern goes: circle, square, circle, square, circle, ?",
+      options: ["Circle", "Square", "Triangle", "Diamond"],
+      correctIndex: 1,
     },
     {
       id: 7,
       type: "number",
       difficulty: "easy",
-      question: "What number comes next: 2, 5, 11, 23, 47, ?"
+      question: "Which number comes next: 1, 2, 4, 8, 16, ?",
+      options: ["24", "30", "32", "36"],
+      correctIndex: 2,
     },
     {
       id: 8,
       type: "logic",
       difficulty: "easy",
-      question: "Four people sit at a round table. Alex sits opposite Ben. Chris sits to the left of Alex. Who sits opposite Chris?"
+      question: "Which does NOT belong with the others?",
+      options: ["Red", "Blue", "Green", "Circle"],
+      correctIndex: 3,
     },
     {
       id: 9,
-      type: "spatial",
+      type: "sequence",
       difficulty: "easy",
-      question: "A cube is painted on all faces and then cut into 27 smaller cubes. How many small cubes have exactly two painted faces?"
+      question: "Which day comes 2 days after Friday?",
+      options: ["Saturday", "Sunday", "Monday", "Tuesday"],
+      correctIndex: 1,
     },
     {
       id: 10,
-      type: "memory",
+      type: "number",
       difficulty: "easy",
-      question: "You briefly saw a 3×3 light grid. Which option shows the identical lights on/off pattern?"
+      question: "Which number comes next: 3, 6, 9, 12, ?",
+      options: ["13", "14", "15", "16"],
+      correctIndex: 2,
     },
 
-    // Cycle 3
+    // 11–20: moderate challenge
     {
       id: 11,
-      type: "pattern",
+      type: "sequence",
       difficulty: "medium",
-      question: "Lines in a sequence grow: |, ||, |||, ||||, ?. Which figure comes next?"
+      question: "Which number completes: 2, 5, 9, 14, 20, ?",
+      options: ["25", "26", "27", "28"],
+      correctIndex: 2,
     },
     {
       id: 12,
-      type: "number",
+      type: "pattern",
       difficulty: "medium",
-      question: "Which number completes the sequence: 9, 16, 25, 36, ?"
+      question:
+        "In a row of shapes: ▲ ▲ ■ ■ ▲ ▲ ■ ■ ▲ ▲ ? – which shape comes next?",
+      options: ["▲", "■", "●", "◆"],
+      correctIndex: 1,
     },
     {
       id: 13,
       type: "logic",
       difficulty: "medium",
-      question: "If all ZARPs are BLERPs and some BLERPs are NERPS, which statement must be true?"
+      question:
+        "All ZARPs are BLERPs. Some BLERPs are NERPS. Which statement must be true?",
+      options: [
+        "Some ZARPs are NERPS.",
+        "All NERPS are ZARPs.",
+        "Some BLERPs are not ZARPs.",
+        "All BLERPs are ZARPs.",
+      ],
+      correctIndex: 2,
     },
     {
       id: 14,
       type: "spatial",
       difficulty: "medium",
-      question: "Which unfolded net can be folded to create the same cube shown?"
+      question:
+        "A square is rotated 90° clockwise four times. How many different orientations does it have?",
+      options: ["1", "2", "3", "4"],
+      correctIndex: 0,
     },
     {
       id: 15,
-      type: "memory",
+      type: "number",
       difficulty: "medium",
-      question: "You saw a sequence of 5 symbols. Which option presents them in the exact same order?"
+      question: "Which number completes: 5, 9, 17, 33, ?",
+      options: ["49", "51", "57", "65"],
+      correctIndex: 1,
     },
-
-    // Cycle 4
     {
       id: 16,
       type: "pattern",
       difficulty: "medium",
-      question: "Shapes alternate in both color and orientation. Which tile should appear next in the row?"
+      question:
+        "A 3×3 grid has 4 black squares on the top row, 3 on the middle, 2 on the bottom. How many black squares will the next grid have if the pattern continues?",
+      options: ["1", "2", "3", "4"],
+      correctIndex: 0,
     },
     {
       id: 17,
-      type: "number",
+      type: "sequence",
       difficulty: "medium",
-      question: "What is the missing number: 4, 9, 19, 39, 79, ?"
+      question: "Which pair continues the pattern: AB, BC, CD, DE, ?",
+      options: ["DF", "EF", "FG", "GH"],
+      correctIndex: 1,
     },
     {
       id: 18,
       type: "logic",
       difficulty: "medium",
-      question: "Three statements are given; only one is true. Which option identifies the true statement consistently?"
+      question:
+        "If no NPCs are leaders and some players are leaders, which statement must be true?",
+      options: [
+        "Some players are NPCs.",
+        "No players are NPCs.",
+        "Some leaders are NPCs.",
+        "All NPCs are players.",
+      ],
+      correctIndex: 1,
     },
     {
       id: 19,
-      type: "spatial",
+      type: "number",
       difficulty: "medium",
-      question: "Which figure shows the same shape mirrored across a vertical axis?"
+      question:
+        "Which number completes: 11, 14, 18, 23, 29, ? (differences: +3, +4, +5, +6, ...)",
+      options: ["34", "35", "36", "37"],
+      correctIndex: 2,
     },
     {
       id: 20,
-      type: "memory",
-      difficulty: "medium",
-      question: "A 2×4 grid flashed briefly. Which answer choice keeps the same cells filled?"
-    },
-
-    // Cycle 5
-    {
-      id: 21,
       type: "pattern",
       difficulty: "medium",
-      question: "In a matrix of circles and triangles, every row follows a rule. Which symbol completes the last row?"
+      question:
+        "In a sequence of arrows: →, ↑, ←, ↓, →, ↑, ←, ? – which direction comes next?",
+      options: ["↓", "→", "↑", "←"],
+      correctIndex: 0,
+    },
+
+    // 21–30: advanced reasoning
+    {
+      id: 21,
+      type: "number",
+      difficulty: "hard",
+      question: "Which number completes: 3, 9, 27, 81, ?",
+      options: ["162", "243", "324", "369"],
+      correctIndex: 1,
     },
     {
       id: 22,
-      type: "number",
-      difficulty: "medium",
-      question: "Complete the series: 1, 1, 2, 3, 5, 8, ?"
+      type: "pattern",
+      difficulty: "hard",
+      question:
+        "A sequence of shapes increases sides: triangle, square, pentagon, hexagon, ?",
+      options: ["Heptagon", "Octagon", "Nonagon", "Decagon"],
+      correctIndex: 0,
     },
     {
       id: 23,
       type: "logic",
-      difficulty: "medium",
-      question: "If yesterday was two days after Monday, what day is today?"
+      difficulty: "hard",
+      question:
+        "If every thinker is a challenger, and some challengers are not thinkers, which is true?",
+      options: [
+        "All challengers are thinkers.",
+        "Some challengers are thinkers.",
+        "No challengers are thinkers.",
+        "No thinkers are challengers.",
+      ],
+      correctIndex: 1,
     },
     {
       id: 24,
-      type: "spatial",
-      difficulty: "medium",
-      question: "Which option shows the same 3D object viewed from above?"
+      type: "sequence",
+      difficulty: "hard",
+      question:
+        "Which number completes: 2, 6, 12, 20, 30, ? (differences: +4, +6, +8, +10, ...)",
+      options: ["40", "42", "44", "46"],
+      correctIndex: 0,
     },
     {
       id: 25,
-      type: "memory",
-      difficulty: "medium",
-      question: "You saw a pattern of three colored squares. Which option repeats the colors in the same positions?"
+      type: "spatial",
+      difficulty: "hard",
+      question:
+        "A cube has all faces painted. It is cut into 27 smaller cubes (3×3×3). How many small cubes have exactly two painted faces?",
+      options: ["8", "12", "18", "24"],
+      correctIndex: 1,
     },
-
-    // Cycle 6
     {
       id: 26,
       type: "pattern",
       difficulty: "hard",
-      question: "A pattern alternates thick and thin lines while increasing in count. Which panel comes next?"
+      question:
+        "Lines increase: ||, |||, ||||, |||||, ? – how many lines are in the next step?",
+      options: ["5", "6", "7", "8"],
+      correctIndex: 1,
     },
     {
       id: 27,
       type: "number",
       difficulty: "hard",
-      question: "What is the next number: 10, 13, 18, 25, 34, ?"
+      question:
+        "Which number completes: 7, 14, 28, 56, ?",
+      options: ["84", "98", "112", "120"],
+      correctIndex: 1,
     },
     {
       id: 28,
       type: "logic",
       difficulty: "hard",
-      question: "Complete the analogy: NIGHT is to DARK as DAY is to ?"
+      question:
+        "Three statements: (1) Exactly one of these is true. (2) Exactly two of these are true. (3) All three are false. Which statement is true?",
+      options: ["Only (1)", "Only (2)", "Only (3)", "None"],
+      correctIndex: 0,
     },
     {
       id: 29,
-      type: "spatial",
+      type: "sequence",
       difficulty: "hard",
-      question: "Which rotation of the L-shaped figure matches the target orientation exactly?"
+      question:
+        "Which number completes: 4, 9, 19, 39, 79, ? (each term ≈ previous×2 +1)",
+      options: ["159", "161", "163", "167"],
+      correctIndex: 1,
     },
     {
       id: 30,
-      type: "memory",
-      difficulty: "hard",
-      question: "You saw a 4-digit code flash briefly. Which option shows the exact same code?"
-    },
-
-    // Cycle 7
-    {
-      id: 31,
       type: "pattern",
       difficulty: "hard",
-      question: "Tiles alternate between black and white diagonals. Which tile continues the checker pattern correctly?"
+      question:
+        "A row alternates thick and thin lines: |, ∥, |, ∥, |, ∥, |, ? – which comes next?",
+      options: ["|", "∥", "=", "≡"],
+      correctIndex: 1,
+    },
+
+    // 31–40: high challenge but still solvable
+    {
+      id: 31,
+      type: "number",
+      difficulty: "hard",
+      question:
+        "Which number completes: 16, 23, 31, 40, 50, ? (differences: +7, +8, +9, +10, ...)",
+      options: ["60", "61", "62", "63"],
+      correctIndex: 2,
     },
     {
       id: 32,
-      type: "number",
+      type: "sequence",
       difficulty: "hard",
-      question: "Which number best completes: 5, 10, 20, 40, ?"
+      question:
+        "Which pair of letters completes: AZ, BY, CX, DW, ?",
+      options: ["EV", "EU", "FV", "FU"],
+      correctIndex: 0,
     },
     {
       id: 33,
       type: "logic",
       difficulty: "hard",
-      question: "Three shapes follow a rule of increasing sides (triangle, square, pentagon...). Which shape comes next?"
+      question:
+        "NPCs always follow the script. Thinkers sometimes break the script. Some people in the room are thinkers. Which must be true?",
+      options: [
+        "Some people in the room are NPCs.",
+        "All people in the room are thinkers.",
+        "No one in the room is an NPC.",
+        "Some people in the room are not thinkers.",
+      ],
+      correctIndex: 3,
     },
     {
       id: 34,
-      type: "spatial",
+      type: "pattern",
       difficulty: "hard",
-      question: "If a shape is rotated 180° and then mirrored horizontally, which option matches the final result?"
+      question:
+        "In a checker pattern, each row starts with the opposite color from the one above. If the first row starts with black, what does the 5th row start with?",
+      options: ["Black", "White", "Gray", "It alternates within the row only"],
+      correctIndex: 0,
     },
     {
       id: 35,
-      type: "memory",
+      type: "number",
       difficulty: "hard",
-      question: "A pattern of arrows (↑, ↓, ←, →) was shown. Which option repeats them in the same order?"
-    }
+      question:
+        "Which number completes: 2, 3, 5, 9, 17, 33, ? (each term ≈ previous×2 -1)",
+      options: ["63", "65", "67", "69"],
+      correctIndex: 1,
+    },
+    {
+      id: 36,
+      type: "sequence",
+      difficulty: "hard",
+      question:
+        "Which number best completes: 4, 7, 13, 25, 49, ? (each term ≈ previous×2 -1)",
+      options: ["95", "97", "99", "101"],
+      correctIndex: 1,
+    },
+    {
+      id: 37,
+      type: "logic",
+      difficulty: "hard",
+      question:
+        "If every solver passes Level 10 and you did not pass Level 10, which is true?",
+      options: [
+        "You are definitely a solver.",
+        "You might be a solver.",
+        "You are not a solver.",
+        "Everyone who failed is a solver.",
+      ],
+      correctIndex: 2,
+    },
+    {
+      id: 38,
+      type: "pattern",
+      difficulty: "hard",
+      question:
+        "Arrows rotate 90° each step: →, ↑, ←, ↓, →, ? – which arrow comes next?",
+      options: ["↑", "←", "↓", "→"],
+      correctIndex: 0,
+    },
+    {
+      id: 39,
+      type: "number",
+      difficulty: "hard",
+      question:
+        "Which number completes: 1, 4, 10, 19, 31, ? (differences: +3, +6, +9, +12, ...)",
+      options: ["43", "44", "45", "46"],
+      correctIndex: 0,
+    },
+    {
+      id: 40,
+      type: "logic",
+      difficulty: "hard",
+      question:
+        "Most NPCs guess randomly. Real thinkers look for structure. If you answered every question so far by guessing, which is most likely true?",
+      options: [
+        "Your score will be consistently high.",
+        "Your score will be entirely predictable.",
+        "Your score will be close to random chance.",
+        "You are definitely not an NPC.",
+      ],
+      correctIndex: 2,
+    },
   ]
 
   const [started, setStarted] = useState(false)
@@ -295,67 +455,8 @@ function App() {
     setQuestionIndex(prev => prev + 1)
   }
 
-  const renderAnswer = () => {
-
-    if (currentQuestion.type === "number") {
-      return (
-        <div className="text-5xl font-black text-blue-400">
-          24
-        </div>
-      )
-    }
-
-    if (currentQuestion.type === "logic") {
-      return (
-        <div className="flex flex-col items-center gap-2">
-
-          <div className="w-12 h-12 rounded-full bg-blue-400"></div>
-
-          <div className="w-20 h-2 bg-white/30 rounded-full"></div>
-
-          <div className="w-12 h-12 rotate-45 bg-white/20"></div>
-
-        </div>
-      )
-    }
-
-    if (currentQuestion.type === "spatial") {
-      return (
-        <div className="w-20 h-20 border-4 border-blue-400 rotate-45 rounded-2xl"></div>
-      )
-    }
-
-    if (currentQuestion.type === "memory") {
-      return (
-        <div className="grid grid-cols-3 gap-2">
-
-          <div className="w-5 h-5 bg-blue-400 rounded"></div>
-          <div className="w-5 h-5 bg-white/20 rounded"></div>
-          <div className="w-5 h-5 bg-blue-400 rounded"></div>
-
-          <div className="w-5 h-5 bg-white/20 rounded"></div>
-          <div className="w-5 h-5 bg-blue-400 rounded"></div>
-          <div className="w-5 h-5 bg-white/20 rounded"></div>
-
-          <div className="w-5 h-5 bg-blue-400 rounded"></div>
-          <div className="w-5 h-5 bg-white/20 rounded"></div>
-          <div className="w-5 h-5 bg-blue-400 rounded"></div>
-
-        </div>
-      )
-    }
-
-    return (
-      <div className="grid grid-cols-2 gap-2">
-
-        <div className="w-6 h-6 rounded bg-blue-400"></div>
-        <div className="w-6 h-6 rounded border border-white/30"></div>
-        <div className="w-6 h-6 rounded border border-white/30"></div>
-        <div className="w-6 h-6 rounded bg-blue-400"></div>
-
-      </div>
-    )
-  }
+  // Answer visuals are now fully driven by question.options.
+  // Each option is rendered as text inside a premium glassmorphism card below.
 
   if (analyzing) {
     return (
@@ -443,11 +544,9 @@ function App() {
 
         <div className="relative z-10 w-full border-b border-white/20 bg-white/60 backdrop-blur-xl p-4 flex items-center justify-between shadow-[0_10px_35px_rgba(15,23,42,0.12)]">
 
-
           <div className="text-slate-500">
             Question {questionIndex + 1} / {questions.length}
           </div>
-
 
           <div className="text-cyan-600 font-semibold">
             {formatTime()}
@@ -455,11 +554,9 @@ function App() {
 
         </div>
 
-
         <div className="w-full h-1 bg-slate-200 relative z-10">
 
           <div
-
             className="h-full bg-gradient-to-r from-cyan-500 to-blue-600 transition-all duration-500 rounded-full"
             style={{
               width: `${((questionIndex + 1) / questions.length) * 100}%`
@@ -470,37 +567,32 @@ function App() {
 
         <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 text-center">
 
-
           <div className="max-w-3xl w-full rounded-3xl bg-white/80 backdrop-blur-xl border border-slate-200 shadow-[0_24px_60px_rgba(15,23,42,0.12)] px-6 py-10">
 
             <div className="mb-6 text-slate-500 uppercase tracking-[0.3em] text-xs">
               NPC Detector Assessment
             </div>
 
-
             <h1 className="text-3xl md:text-5xl font-semibold leading-tight tracking-tight text-slate-900">
               {currentQuestion.question}
             </h1>
 
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-10">
 
-            <div className="grid grid-cols-2 gap-4 mt-10">
-
-              {[1, 2, 3, 4].map((item) => (
+              {currentQuestion.options.map((option, index) => (
 
                 <button
-                  key={item}
+                  key={index}
                   onClick={nextQuestion}
-
-                  className="group aspect-square rounded-3xl bg-white/80 border border-slate-200 hover:border-cyan-500 hover:bg-cyan-50 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 cursor-pointer overflow-hidden relative shadow-[0_18px_45px_rgba(15,23,42,0.08)]"
+                  className="group rounded-3xl bg-white/80 border border-slate-200 hover:border-cyan-500 hover:bg-cyan-50 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 cursor-pointer overflow-hidden relative shadow-[0_18px_45px_rgba(15,23,42,0.08)] min-h-[72px] flex items-center justify-center px-4"
                 >
-
 
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 bg-gradient-to-br from-cyan-400/15 via-blue-500/10 to-transparent"></div>
 
                   <div className="relative z-10 flex items-center justify-center w-full h-full">
-
-                    {renderAnswer()}
-
+                    <span className="text-base md:text-lg font-medium text-slate-900 leading-snug text-center">
+                      {option}
+                    </span>
                   </div>
 
                 </button>
@@ -535,24 +627,36 @@ function App() {
 
 
         <h1 className="text-5xl md:text-7xl font-semibold leading-tight max-w-5xl tracking-tight text-slate-900">
-          Discover How Your Brain
-          <span className="text-blue-400"> Actually Performs</span>
+          Think You&apos;re Different?
+          <span className="text-cyan-600"> Prove It.</span>
         </h1>
 
 
         <p className="mt-6 text-slate-500 max-w-2xl text-lg">
-          Measure reasoning, pattern recognition, memory,
-          focus, and processing speed through a cinematic
-          modern intelligence assessment.
+          The internet&apos;s most brutal logic & pattern recognition challenge.
+          Most users fail before Question 12.
         </p>
 
-        <button
-          onClick={() => setStarted(true)}
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-4 text-sm text-slate-500">
+          <span className="rounded-full bg-white/80 px-4 py-2 shadow-sm border border-slate-200">127,000+ Challenges Attempted</span>
+          <span className="rounded-full bg-white/80 px-4 py-2 shadow-sm border border-slate-200">Only 6% Reach The Final Questions</span>
+          <span className="rounded-full bg-white/80 px-4 py-2 shadow-sm border border-slate-200">Average Completion Time: 11 Minutes</span>
+        </div>
 
-          className="mt-10 px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white hover:scale-105 active:scale-95 transition-all duration-300 font-semibold text-lg shadow-[0_18px_45px_rgba(56,189,248,0.55)]"
-        >
-          Start Free Assessment
-        </button>
+        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <button
+            onClick={() => setStarted(true)}
+            className="px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white hover:scale-105 active:scale-95 transition-all duration-300 font-semibold text-lg shadow-[0_18px_45px_rgba(56,189,248,0.55)] w-full sm:w-auto"
+          >
+            Start The Challenge
+          </button>
+          <button
+            className="px-8 py-4 rounded-2xl bg-white/80 border border-slate-200 text-slate-700 hover:border-cyan-500 hover:bg-cyan-50 hover:scale-[1.02] active:scale-95 transition-all duration-300 font-semibold text-lg shadow-[0_10px_30px_rgba(15,23,42,0.08)] w-full sm:w-auto"
+          >
+            View Top Scores
+          </button>
+        </div>
+
 
       </div>
 
