@@ -367,8 +367,8 @@ function App() {
 
           <div className="w-32 h-32 mx-auto rounded-full border-4 border-blue-500/20 border-t-blue-500 animate-spin"></div>
 
-          <div className="mt-12 text-blue-400 uppercase tracking-[0.4em] text-sm">
-            BrainStormIQ Analysis Engine
+          <div className="mt-8 text-cyan-600 uppercase tracking-[0.4em] text-xs">
+            NPC Detector Analysis Engine
           </div>
 
           <h1 className="mt-6 text-5xl md:text-7xl font-black leading-tight">
@@ -468,8 +468,8 @@ function App() {
 
           <div className="max-w-3xl w-full">
 
-            <div className="mb-6 text-zinc-500 uppercase tracking-[0.3em] text-sm">
-              BrainStormIQ Assessment
+            <div className="mb-6 text-slate-500 uppercase tracking-[0.3em] text-xs">
+              NPC Detector Assessment
             </div>
 
             <h1 className="text-4xl md:text-6xl font-black leading-tight">
@@ -520,7 +520,7 @@ function App() {
 
           <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
 
-          <span>BrainStormIQ Intelligence System</span>
+          <span>NPC Detector</span>
 
         </div>
 
