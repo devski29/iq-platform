@@ -359,9 +359,9 @@ function App() {
 
   if (analyzing) {
     return (
-      <div className="min-h-screen bg-[#050505] text-white flex items-center justify-center overflow-hidden relative">
+      <div className="min-h-screen bg-gradient-to-b from-[#F9FAFF] via-[#ECF4FF] to-[#E5F4FF] text-slate-900 flex items-center justify-center overflow-hidden relative">
 
-        <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-blue-500/20 rounded-full blur-3xl floating-glow"></div>
+        <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-cyan-400/20 rounded-full blur-3xl floating-glow"></div>
 
         <div className="relative z-10 text-center max-w-2xl px-6">
 
@@ -384,9 +384,9 @@ function App() {
 
   if (finished) {
     return (
-      <div className="min-h-screen bg-[#050505] text-white flex items-center justify-center px-6 overflow-hidden relative">
+      <div className="min-h-screen bg-gradient-to-b from-[#F9FAFF] via-[#ECF4FF] to-[#E5F4FF] text-slate-900 flex items-center justify-center px-6 overflow-hidden relative">
 
-        <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-blue-500/20 rounded-full blur-3xl floating-glow"></div>
+        <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-cyan-400/20 rounded-full blur-3xl floating-glow"></div>
 
         <div className="relative z-10 max-w-2xl w-full text-center">
 
@@ -436,11 +436,12 @@ function App() {
 
   if (started) {
     return (
-      <div className="min-h-screen bg-[#050505] text-white flex flex-col overflow-hidden relative">
+      <div className="min-h-screen bg-gradient-to-b from-[#F9FAFF] via-[#ECF4FF] to-[#E5F4FF] text-slate-900 flex flex-col overflow-hidden relative">
 
-        <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-blue-500/20 rounded-full blur-3xl floating-glow"></div>
+        <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-cyan-400/20 rounded-full blur-3xl floating-glow"></div>
 
-        <div className="relative z-10 w-full border-b border-white/10 p-4 flex items-center justify-between">
+
+        <div className="relative z-10 w-full border-b border-white/20 bg-white/60 backdrop-blur-xl p-4 flex items-center justify-between shadow-[0_10px_35px_rgba(15,23,42,0.12)]">
 
           <div className="text-zinc-400">
             Question {questionIndex + 1} / {questions.length}
@@ -508,13 +509,14 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white overflow-hidden relative">
+    <div className="min-h-screen bg-gradient-to-b from-[#F9FAFF] via-[#ECF4FF] to-[#E5F4FF] text-slate-900 overflow-hidden relative">
 
-      <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-blue-500/20 rounded-full blur-3xl floating-glow"></div>
+      <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-cyan-400/20 rounded-full blur-3xl floating-glow"></div>
 
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 text-center">
 
-        <div className="mb-6 flex items-center gap-3 px-4 py-2 rounded-full border border-blue-500/30 bg-white/5 backdrop-blur-md text-sm text-blue-200">
+
+        <div className="mb-6 flex items-center gap-3 px-4 py-2 rounded-full border border-cyan-400/40 bg-white/70 backdrop-blur-xl text-sm text-cyan-700 shadow-[0_18px_40px_rgba(15,23,42,0.12)]">
 
           <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
 
@@ -522,12 +524,14 @@ function App() {
 
         </div>
 
-        <h1 className="text-5xl md:text-7xl font-black leading-tight max-w-5xl">
+
+        <h1 className="text-5xl md:text-7xl font-semibold leading-tight max-w-5xl tracking-tight text-slate-900">
           Discover How Your Brain
           <span className="text-blue-400"> Actually Performs</span>
         </h1>
 
-        <p className="mt-6 text-zinc-400 max-w-2xl text-lg">
+
+        <p className="mt-6 text-slate-500 max-w-2xl text-lg">
           Measure reasoning, pattern recognition, memory,
           focus, and processing speed through a cinematic
           modern intelligence assessment.
@@ -535,7 +539,8 @@ function App() {
 
         <button
           onClick={() => setStarted(true)}
-          className="mt-10 px-8 py-4 rounded-2xl bg-blue-500 hover:bg-blue-400 hover:scale-105 active:scale-95 transition-all duration-300 font-semibold text-lg shadow-[0_0_40px_rgba(59,130,246,0.5)]"
+
+          className="mt-10 px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white hover:scale-105 active:scale-95 transition-all duration-300 font-semibold text-lg shadow-[0_18px_45px_rgba(56,189,248,0.55)]"
         >
           Start Free Assessment
         </button>
