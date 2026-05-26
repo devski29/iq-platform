@@ -394,8 +394,19 @@ function App() {
   const [questionIndex, setQuestionIndex] = useState(0)
   const [finished, setFinished] = useState(false)
   const [analyzing, setAnalyzing] = useState(false)
+  const [viewingResults, setViewingResults] = useState(false)
+  const [resultAnalyzing, setResultAnalyzing] = useState(false)
   const [timeLeft, setTimeLeft] = useState(900)
   const [shareOpen, setShareOpen] = useState(false)
+
+  const loadingMessages = [
+    "Analysing Cognitive Patterns...",
+    "Calculating NPC Resistance...",
+    "Evaluating Pattern Recognition...",
+    "Generating Neural Profile...",
+    "Simulation Integrity Check Complete.",
+  ]
+  const [currentLoadingMessageIndex, setCurrentLoadingMessageIndex] = useState(0)
 
   const currentQuestion = questions[questionIndex]
 
@@ -430,6 +441,18 @@ function App() {
     return () => clearInterval(timer)
 
   }, [started, finished, analyzing])
+
+  useEffect(() => {
+    if (!resultAnalyzing) return
+
+    const messageInterval = setInterval(() => {
+      setCurrentLoadingMessageIndex(prev => 
+        prev < loadingMessages.length - 1 ? prev + 1 : prev
+      )
+    }, 800)
+
+    return () => clearInterval(messageInterval)
+  }, [resultAnalyzing, loadingMessages.length])
 
   const formatTime = () => {
 
@@ -501,78 +524,288 @@ function App() {
     )
   }
 
-  if (finished) {
+  if (resultAnalyzing) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-[#F9FAFF] via-[#ECF4FF] to-[#E5F4FF] text-slate-900 flex items-center justify-center px-6 overflow-hidden relative">
+      <div className="min-h-screen bg-gradient-to-b from-[#F9FAFF] via-[#ECF4FF] to-[#E5F4FF] text-slate-900 flex items-center justify-center overflow-hidden relative">
 
         <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-cyan-400/20 rounded-full blur-3xl floating-glow"></div>
 
-        <div className="relative z-10 max-w-2xl w-full text-center">
+        <div className="relative z-10 text-center max-w-2xl px-6">
 
-          <div className="text-cyan-600 text-xs tracking-[0.3em] uppercase mb-5">
-            Results Ready
+          <div className="w-32 h-32 mx-auto rounded-full border-4 border-cyan-400/20 border-t-cyan-500 animate-spin shadow-[0_0_40px_rgba(56,189,248,0.45)] bg-white/40 backdrop-blur-xl"></div>
+
+          <div className="mt-8 text-cyan-600 uppercase tracking-[0.4em] text-xs">
+            NPC Detector Analysis Engine
           </div>
 
-          <h1 className="text-4xl md:text-5xl font-semibold leading-tight tracking-tight text-slate-900">
-            Your NPC Score
-            <span className="text-cyan-600"> Has Been Calculated</span>
+          <h1 className="mt-4 text-4xl md:text-5xl font-semibold leading-tight tracking-tight text-slate-900 min-h-[120px] flex items-center justify-center">
+            <span className="inline-block">{loadingMessages[currentLoadingMessageIndex]}</span>
           </h1>
-
-          <div className="mt-12 p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md">
-
-            <div className="text-slate-500 mb-2 text-sm font-medium">
-              NPC Score Rating
-            </div>
-
-            <div className="mt-1 text-slate-400 text-sm">
-              Detailed Simulation Escape analysis locked
-            </div>
-
-            <div className="text-7xl font-semibold blur-sm select-none mt-6 text-slate-900">
-              127
-            </div>
-
-            <div className="mt-4 text-amber-500 font-semibold animate-pulse">
-              Premium cognitive profile hidden
-            </div>
-
-            <a
-              href="https://buy.stripe.com/fZu00iejd55hc7c3yobAs00"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block mt-8 w-full py-5 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 text-xl font-semibold shadow-[0_20px_55px_rgba(56,189,248,0.6)]"
-            >
-              Unlock Full NPC Report • £1.99
-            </a>
-
-          </div>
 
         </div>
 
+      </div>
+    )
+  }
+
+  if (viewingResults) {
+    const score = 127
+    const npcRating = "42%"
+    const percentile = "78th"
+    const criticalThinkingScore = "94/100"
+    const escapePercentage = "89%"
+    
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-[#F9FAFF] via-[#ECF4FF] to-[#E5F4FF] text-slate-900 flex flex-col overflow-hidden relative">
+
+        <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-cyan-400/20 rounded-full blur-3xl floating-glow"></div>
+
+        <div className="relative z-10 flex-1 overflow-y-auto px-6 py-12">
+          <div className="max-w-3xl mx-auto">
+
+            {/* Header */}
+            <div className="text-center mb-12">
+              <div className="text-cyan-600 text-xs tracking-[0.3em] uppercase mb-4">
+                Results Ready
+              </div>
+              <h1 className="text-4xl md:text-5xl font-semibold leading-tight tracking-tight text-slate-900">
+                Your NPC Score
+                <span className="text-cyan-600"> Has Been Calculated</span>
+              </h1>
+            </div>
+
+            {/* Main Score Card with Animation */}
+            <div className="mb-10 p-8 rounded-3xl bg-white/80 border border-slate-200 backdrop-blur-xl shadow-[0_24px_60px_rgba(15,23,42,0.12)] overflow-hidden relative group">
+              
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 bg-gradient-to-br from-cyan-400/10 via-blue-500/5 to-transparent"></div>
+
+              <div className="relative z-10">
+                <div className="text-slate-500 mb-2 text-sm font-medium tracking-wide">
+                  NPC Score Rating
+                </div>
+
+                <div className="mt-6 text-7xl font-bold text-slate-900 tracking-tight number-animate">
+                  {score}
+                </div>
+
+                <div className="mt-4 text-cyan-600 font-semibold text-lg">
+                  Thinking Patterns Detected
+                </div>
+              </div>
+            </div>
+
+            {/* Three Column Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+              
+              {/* NPC Rating */}
+              <div className="p-6 rounded-2xl bg-white/80 border border-slate-200 backdrop-blur-xl shadow-[0_18px_45px_rgba(15,23,42,0.08)] group overflow-hidden relative hover:border-cyan-400/60 transition-all duration-300 hover:scale-[1.02]">
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 bg-gradient-to-br from-cyan-400/10 via-blue-500/5 to-transparent"></div>
+                <div className="relative z-10">
+                  <div className="text-slate-500 text-xs tracking-wide uppercase mb-3 font-medium">
+                    NPC Resistance
+                  </div>
+                  <div className="text-4xl font-bold text-slate-900">
+                    {npcRating}
+                  </div>
+                  <p className="text-xs text-slate-400 mt-2">
+                    Independent thinker level
+                  </p>
+                </div>
+              </div>
+
+              {/* Percentile */}
+              <div className="p-6 rounded-2xl bg-white/80 border border-slate-200 backdrop-blur-xl shadow-[0_18px_45px_rgba(15,23,42,0.08)] group overflow-hidden relative hover:border-cyan-400/60 transition-all duration-300 hover:scale-[1.02]">
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 bg-gradient-to-br from-cyan-400/10 via-blue-500/5 to-transparent"></div>
+                <div className="relative z-10">
+                  <div className="text-slate-500 text-xs tracking-wide uppercase mb-3 font-medium">
+                    Your Percentile
+                  </div>
+                  <div className="text-4xl font-bold text-slate-900">
+                    {percentile}
+                  </div>
+                  <p className="text-xs text-slate-400 mt-2">
+                    Better than most
+                  </p>
+                </div>
+              </div>
+
+              {/* Critical Thinking */}
+              <div className="p-6 rounded-2xl bg-white/80 border border-slate-200 backdrop-blur-xl shadow-[0_18px_45px_rgba(15,23,42,0.08)] group overflow-hidden relative hover:border-cyan-400/60 transition-all duration-300 hover:scale-[1.02]">
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 bg-gradient-to-br from-cyan-400/10 via-blue-500/5 to-transparent"></div>
+                <div className="relative z-10">
+                  <div className="text-slate-500 text-xs tracking-wide uppercase mb-3 font-medium">
+                    Critical Thinker Rating
+                  </div>
+                  <div className="text-4xl font-bold text-slate-900">
+                    {criticalThinkingScore}
+                  </div>
+                  <p className="text-xs text-slate-400 mt-2">
+                    Logic & reasoning
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Brain Profile & Analysis */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+              
+              {/* Cognitive Strengths */}
+              <div className="p-6 rounded-2xl bg-white/80 border border-slate-200 backdrop-blur-xl shadow-[0_18px_45px_rgba(15,23,42,0.08)] group overflow-hidden relative hover:border-cyan-400/60 transition-all duration-300 hover:scale-[1.02]">
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 bg-gradient-to-br from-cyan-400/10 via-blue-500/5 to-transparent"></div>
+                <div className="relative z-10">
+                  <h3 className="font-semibold text-slate-900 mb-4 text-lg">
+                    🧠 Cognitive Strengths
+                  </h3>
+                  <ul className="space-y-2 text-sm text-slate-600">
+                    <li className="flex items-start gap-2">
+                      <span className="text-cyan-600 font-bold mt-0.5">✓</span>
+                      <span>Pattern Recognition Excellence</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-cyan-600 font-bold mt-0.5">✓</span>
+                      <span>Logical Reasoning Ability</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-cyan-600 font-bold mt-0.5">✓</span>
+                      <span>Rapid Problem Solving</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-cyan-600 font-bold mt-0.5">✓</span>
+                      <span>Abstract Thinking</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Simulation Escape */}
+              <div className="p-6 rounded-2xl bg-white/80 border border-slate-200 backdrop-blur-xl shadow-[0_18px_45px_rgba(15,23,42,0.08)] group overflow-hidden relative hover:border-cyan-400/60 transition-all duration-300 hover:scale-[1.02]">
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 bg-gradient-to-br from-cyan-400/10 via-blue-500/5 to-transparent"></div>
+                <div className="relative z-10">
+                  <h3 className="font-semibold text-slate-900 mb-4 text-lg">
+                    🎯 Simulation Escape Probability
+                  </h3>
+                  <div className="space-y-4">
+                    <div>
+                      <div className="flex items-end justify-between mb-2">
+                        <span className="text-sm font-medium text-slate-700">Escape Chance</span>
+                        <span className="text-xl font-bold text-cyan-600">{escapePercentage}</span>
+                      </div>
+                      <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
+                        <div className="h-full bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full" style={{width: escapePercentage}}></div>
+                      </div>
+                    </div>
+                    <p className="text-xs text-slate-500 mt-3">
+                      You have a significantly higher chance of recognizing patterns and breaking free from the algorithm's grip.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Full Analysis */}
+            <div className="p-8 rounded-2xl bg-white/80 border border-slate-200 backdrop-blur-xl shadow-[0_18px_45px_rgba(15,23,42,0.08)] group overflow-hidden relative hover:border-cyan-400/60 transition-all duration-300 mb-10">
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 bg-gradient-to-br from-cyan-400/10 via-blue-500/5 to-transparent"></div>
+              <div className="relative z-10">
+                <h3 className="font-semibold text-slate-900 mb-4 text-lg">
+                  📊 Detailed Analysis
+                </h3>
+                <div className="space-y-4 text-sm text-slate-600">
+                  <p>
+                    Your cognitive profile reveals <strong>above-average pattern recognition abilities</strong> and exceptional performance under time pressure. You've demonstrated the ability to quickly identify logical sequences and spatial relationships—skills that are extremely rare in the general population.
+                  </p>
+                  <p>
+                    Your <strong>{criticalThinkingScore} Critical Thinker Rating</strong> indicates you naturally question assumptions and think systematically. This is a hallmark of genuine independent thinking, not NPC behavior patterns.
+                  </p>
+                  <p>
+                    The algorithms that typically trap NPCs rely on pattern repetition and psychological priming. Your ability to break these patterns suggests you have a <strong>{escapePercentage} probability of resisting systemic cognitive manipulation</strong>.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Social CTA Section */}
+            <div className="space-y-4 mb-10">
+              <button
+                onClick={() => {
+                  const shareText = `I scored ${score} on the NPC Detector Challenge! 🧠 Think you can beat my score? Find out if you're truly independent or just another NPC.`
+                  if (navigator.share) {
+                    navigator.share({
+                      title: 'NPC Detector Challenge',
+                      text: shareText,
+                      url: window.location.origin + window.location.pathname,
+                    }).catch(() => {})
+                  } else {
+                    setShareOpen(true)
+                  }
+                }}
+                className="w-full group relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-white/80 border border-cyan-400/60 text-slate-900 hover:bg-cyan-50 hover:border-cyan-500 shadow-[0_14px_35px_rgba(15,23,42,0.12)] hover:shadow-[0_20px_50px_rgba(56,189,248,0.25)] transition-all duration-300 hover:scale-[1.03] active:scale-95 overflow-hidden"
+              >
+                <span className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-cyan-400/15 via-blue-500/10 to-transparent transition-opacity duration-300" />
+                <span className="relative z-10 flex items-center gap-2 text-lg font-semibold">
+                  <span>📱 Share Your Results</span>
+                </span>
+              </button>
+
+              <button
+                onClick={() => {
+                  const challengeText = `I scored ${score} on the NPC Detector Challenge. Can you beat my score? 🧠`
+                  if (navigator.share) {
+                    navigator.share({
+                      title: 'Challenge Me on NPC Detector',
+                      text: challengeText,
+                      url: window.location.origin + window.location.pathname,
+                    }).catch(() => {})
+                  } else {
+                    setShareOpen(true)
+                  }
+                }}
+                className="w-full group relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-white/80 border border-slate-300 text-slate-900 hover:border-blue-400 hover:bg-blue-50 shadow-[0_14px_35px_rgba(15,23,42,0.08)] hover:shadow-[0_18px_45px_rgba(15,23,42,0.15)] transition-all duration-300 hover:scale-[1.03] active:scale-95 overflow-hidden"
+              >
+                <span className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-blue-400/10 via-cyan-500/5 to-transparent transition-opacity duration-300" />
+                <span className="relative z-10 flex items-center gap-2 text-lg font-semibold">
+                  <span>⚔️ Challenge A Friend</span>
+                </span>
+              </button>
+            </div>
+
+            {/* Optional Future CTA */}
+            <div className="p-6 rounded-2xl bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200/50 backdrop-blur-xl shadow-[0_10px_30px_rgba(56,189,248,0.1)] group overflow-hidden relative">
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 bg-gradient-to-br from-cyan-400/5 via-blue-500/5 to-transparent"></div>
+              <div className="relative z-10 text-center">
+                <h3 className="font-semibold text-slate-900 mb-2">
+                  🚀 Coming Soon
+                </h3>
+                <p className="text-sm text-slate-600">
+                  Want deeper cognitive analysis in future updates? We're building advanced brain reports with personalized insights into your thinking patterns.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
         {shareOpen && (
-          <div className="fixed inset-0 z-20 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm">
+          <div className="fixed inset-0 z-30 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm">
             <div className="bg-white rounded-3xl shadow-[0_24px_60px_rgba(15,23,42,0.3)] max-w-sm w-full mx-4 p-6 space-y-4">
               <h2 className="text-lg font-semibold text-slate-900">
-                Share this question
+                Share your achievement
               </h2>
               <p className="text-sm text-slate-500">
-                I&apos;m stuck on this NPC Detector Challenge question 💀 Think you can solve it?
+                Spread the challenge and see who else can match your score.
               </p>
               <button
                 onClick={() => {
-                  const baseUrl = window.location.origin + window.location.pathname
-                  const shareUrl = baseUrl + '?q=' + currentQuestion.id
-                  const shareText = "I'm stuck on this NPC Detector Challenge question 💀 Think you can solve it?"
+                  const shareText = `I scored ${score} on the NPC Detector Challenge! 🧠 Think you can beat my score?`
                   if (navigator.share) {
-                    navigator
-                      .share({
-                        title: 'NPC Detector Challenge',
-                        text: shareText,
-                        url: shareUrl,
-                      })
-                      .catch(() => {})
+                    navigator.share({
+                      title: 'NPC Detector Challenge',
+                      text: shareText,
+                      url: window.location.origin + window.location.pathname,
+                    }).catch(() => {})
                   } else if (navigator.clipboard) {
-                    navigator.clipboard.writeText(shareUrl)
+                    navigator.clipboard.writeText(window.location.origin + window.location.pathname)
                   }
                   setShareOpen(false)
                 }}
@@ -592,6 +825,78 @@ function App() {
             </div>
           </div>
         )}
+
+      </div>
+    )
+  }
+
+  if (finished) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-[#F9FAFF] via-[#ECF4FF] to-[#E5F4FF] text-slate-900 flex items-center justify-center px-6 overflow-hidden relative">
+
+        <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-cyan-400/20 rounded-full blur-3xl floating-glow"></div>
+
+        <div className="relative z-10 max-w-2xl w-full text-center">
+
+          <div className="text-cyan-600 text-xs tracking-[0.3em] uppercase mb-5">
+            Challenge Complete
+          </div>
+
+          <h1 className="text-4xl md:text-5xl font-semibold leading-tight tracking-tight text-slate-900">
+            Get Your
+            <span className="text-cyan-600"> NPC Results</span>
+          </h1>
+
+          <p className="mt-6 text-slate-500 max-w-xl mx-auto">
+            See your full cognitive profile, brain analysis, and escape probability score.
+          </p>
+
+          <div className="mt-12 space-y-4">
+            <button
+              onClick={() => {
+                setResultAnalyzing(true)
+                setTimeout(() => {
+                  setResultAnalyzing(false)
+                  setViewingResults(true)
+                }, 4000)
+              }}
+              className="group relative w-full inline-flex items-center justify-center gap-3 px-8 py-6 rounded-3xl overflow-hidden hover:shadow-[0_0_40px_rgba(56,189,248,0.6)] transition-shadow duration-300"
+              style={{
+                boxShadow: '0 0 20px rgba(56, 189, 248, 0.5), 0 0 40px rgba(59, 130, 246, 0.3)'
+              }}
+            >
+              {/* Animated background glow */}
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-blue-600 to-cyan-600 rounded-3xl"></div>
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-500 rounded-3xl transition-all duration-500"></div>
+              
+              {/* Animated pulse effect */}
+              <div className="absolute inset-0 rounded-3xl animate-pulse bg-cyan-400/30 group-hover:animate-none"></div>
+              
+              {/* Glossy overlay */}
+              <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/20 to-transparent rounded-t-3xl"></div>
+
+              {/* Button text */}
+              <span className="relative z-10 flex items-center gap-3 text-white font-bold text-lg md:text-xl tracking-wide">
+                <span className="inline-block text-2xl">✨</span>
+                View Results
+                <span className="inline-block animate-bounce" style={{animationDelay: '0.2s'}}>→</span>
+              </span>
+
+              {/* Shadow effect */}
+            </button>
+
+            <button
+              onClick={() => setStarted(false)}
+              className="group relative w-full inline-flex items-center justify-center gap-2 px-8 py-4 rounded-3xl bg-white/80 border border-slate-300 text-slate-900 hover:border-slate-400 hover:bg-white shadow-[0_14px_35px_rgba(15,23,42,0.1)] hover:shadow-[0_18px_45px_rgba(15,23,42,0.15)] transition-all duration-300 hover:scale-[1.02] active:scale-95 overflow-hidden"
+            >
+              <span className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-slate-200/10 via-slate-300/5 to-transparent transition-opacity duration-300" />
+              <span className="relative z-10 font-semibold text-base md:text-lg">
+                Start Over
+              </span>
+            </button>
+          </div>
+
+        </div>
 
       </div>
     )
